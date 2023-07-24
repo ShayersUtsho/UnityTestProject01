@@ -8,6 +8,7 @@ public class Utha : MonoBehaviour
     public Vector3 position;
     public Quaternion rotation;
     public Vector3 scale;
+    public bool plane_mode = false;
     private void Awake()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -24,15 +25,30 @@ public class Utha : MonoBehaviour
         transform.position = position;
         transform.localScale = scale;
         transform.rotation = rotation;
-        Debug.Log(position);
+/*        Debug.Log(position);
         Debug.Log(rotation);
-        Debug.Log(scale);
-        if (Input.GetKey(KeyCode.Space))                                    transform.position += new Vector3(0, 1, 0) * speed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.LeftShift))                                transform.position += new Vector3(0, -1, 0) * speed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))       transform.position += new Vector3(0, 0, 1) * speed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))     transform.position += new Vector3(0, 0, -1) * speed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))     transform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))    transform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
+        Debug.Log(scale);*/
+
+
+        if (Input.GetKey(KeyCode.Space)) 
+            transform.position += new Vector3(0, 1, 0) * speed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.LeftShift)) 
+            transform.position += new Vector3(0, -1, 0) * speed * Time.deltaTime;
+
+        float angleXZ = transform.rotation.eulerAngles.y;
+        Debug.Log(angleXZ);
+        if (Input.GetKey(KeyCode.W))
+            transform.position += new Vector3(1 * (float)System.Math.Sin(angleXZ * 3.14159265f / 180), 0, 1 * (float)System.Math.Cos(angleXZ * 3.14159265f / 180)) * speed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.S))
+            transform.position += new Vector3(-1 * (float)System.Math.Sin(angleXZ * 3.14159265f / 180), 0, -1 * (float)System.Math.Cos(angleXZ * 3.14159265f / 180)) * speed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.Q))
+            transform.position += new Vector3(-1 * (float)System.Math.Sin((angleXZ + 90) * 3.14159265f / 180), 0, -1 * (float)System.Math.Cos((angleXZ + 90) * 3.14159265f / 180)) * speed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.E))
+            transform.position += new Vector3(1 * (float)System.Math.Sin((angleXZ + 90) * 3.14159265f / 180), 0, 1 * (float)System.Math.Cos((angleXZ + 90) * 3.14159265f / 180)) * speed * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A))
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y - 45 * speed * Time.deltaTime, transform.rotation.eulerAngles.z);
+        if (Input.GetKey(KeyCode.D))
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, rotation.eulerAngles.y + 45 * speed * Time.deltaTime, transform.rotation.eulerAngles.z);
 
 
         position = transform.position;
